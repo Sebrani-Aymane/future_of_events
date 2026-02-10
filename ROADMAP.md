@@ -1,64 +1,15 @@
-# 🚀 Product Roadmap: Hackathon Platform
-
-> **Goal:** Transform this platform into a production-ready, sellable SaaS product for organizing and managing hackathons, coding competitions, and tech events.
-
----
-
-## 📊 Current State Assessment
-
-### ✅ What's Built & Connected to Supabase
-- **Frontend UI:** Beautiful, responsive design with Tailwind CSS
-- **Core Pages:** Landing, Dashboard, Admin, Judge Portal, Auth pages
-- **Component Library:** Buttons, Cards, Inputs, Avatars, Progress bars, etc.
-- **Database Schema:** Comprehensive Supabase schema for events, teams, projects, scores
-- **Type System:** Full TypeScript types for database entities
-- **Query Layer:** Supabase queries for CRUD operations
-- **Authentication:** Supabase Auth with email/password, GitHub & Google OAuth
-- **Real Data Integration:** All pages now connected to Supabase (replaced mock data)
-
-### ✅ Recently Completed
-- Events listing page (`/events`) with real Supabase data
-- Event detail page (`/events/[slug]`) with registration flow
-- Dashboard pages with real data (overview, team, project, announcements, leaderboard)
-- Admin dashboard with real participant & project management
-- Judge portal with scoring interface
-- Team management (create, join, leave, invite)
-- Project submission system
-- TypeScript error fixes across all files
-
-### ⚠️ What Still Needs Work
-- Supabase database types need to be regenerated (`supabase gen types typescript`)
-- Some API endpoints need to be created
-- Additional admin features (export, settings)
-- Real-time notifications
-- Email notifications
-
----
 
 ## 🎯 Phase 1: Core Functionality (MVP)
 **Timeline: 4-6 weeks | Priority: CRITICAL | Status: 🟡 ~80% Complete**
 
 ### 1.1 Authentication & Authorization
-- [x] **Supabase Auth Integration**
-  - [x] Email/password sign up & sign in
-  - [x] OAuth providers (GitHub, Google)
-  - [x] Email verification flow
-  - [x] Password reset functionality
   - [ ] Magic link authentication
-- [x] **Session Management**
-  - [x] Protected routes middleware
-  - [x] Role-based access control (participant, judge, admin, superadmin)
-  - [x] Auth state persistence
 - [ ] **Profile Management**
   - [ ] Complete profile page with avatar upload
   - [ ] Edit profile functionality
   - [ ] Skills & experience editor
 
 ### 1.2 Event Management
-- [x] **Event Display**
-  - [x] Events listing page (`/events`)
-  - [x] Event detail page (`/events/[slug]`)
-  - [x] Event registration flow
 - [ ] **Event CRUD (Admin)**
   - [ ] Create new event form
   - [ ] Edit event details
@@ -78,14 +29,9 @@
 
 ### 1.3 Registration System
 - [x] **Participant Registration**
-  - [x] Registration form with validation
   - [ ] T-shirt size, dietary restrictions, etc.
   - [ ] Emergency contact info
-  - [x] Terms acceptance
 - [x] **Registration Management (Admin)**
-  - [x] View all registrations
-  - [x] Approve/reject registrations
-  - [x] Bulk actions (approve all)
   - [ ] Export CSV
   - [ ] Check-in system (QR code support)
 - [ ] **Capacity Management**
@@ -93,39 +39,19 @@
   - [ ] Automatic promotion from waitlist
 
 ### 1.4 Team System
-- [x] **Team Creation**
-  - [x] Create team with name/description
-  - [x] Generate unique join code
-  - [x] Set team as open/closed
-  - [x] "Looking for skills" tags
 - [x] **Team Joining**
-  - [x] Join via code
-  - [x] Browse open teams
   - [ ] Request to join functionality
 - [x] **Team Management**
   - [ ] Invite members by email
-  - [x] Remove members (leader only)
-  - [x] Transfer leadership
-  - [x] Leave team
 - [ ] **Team Matching** (Nice to have)
   - [ ] AI-powered team suggestions
   - [ ] Skills-based matching
 
 ### 1.5 Project Submission
 - [x] **Submission Form**
-  - [x] Project name & description
-  - [x] Tech stack selection
-  - [x] Demo URL, GitHub repo, video link
   - [ ] Screenshot/image upload
-  - [x] Submission deadline enforcement
 - [x] **Submission Management**
-  - [x] Edit submission before deadline
-  - [x] View submission status
   - [ ] Late submission handling
-- [x] **Project Gallery**
-  - [x] Public project showcase
-  - [x] Filter by tech stack, category
-  - [x] Search functionality
 
 ---
 
@@ -135,28 +61,16 @@
 ### 2.1 Judge Portal
 - [x] **Judge Assignment**
   - [ ] Invite judges by email
-  - [x] Assign specific projects to judges
   - [ ] Round-robin assignment algorithm
   - [ ] Conflict of interest flagging
-- [x] **Scoring Interface**
-  - [x] Configurable scoring criteria
-  - [x] Score slider/input per criterion
-  - [x] Written feedback/comments
-  - [x] Save draft scores
-  - [x] Submit final scores
 - [x] **Judge Progress**
-  - [x] Track completed vs pending reviews
   - [ ] Deadline reminders
   - [ ] Judge leaderboard (completion rate)
 
 ### 2.2 Results & Leaderboard
 - [x] **Score Calculation**
-  - [x] Weighted average calculation
   - [ ] Normalize scores across judges
-  - [x] Handle missing scores gracefully
 - [x] **Leaderboard**
-  - [x] Real-time leaderboard (during judging)
-  - [x] Public leaderboard (post-results)
   - [ ] Category-specific leaderboards
 - [ ] **Winner Announcement**
   - [ ] Admin control to publish results
@@ -173,15 +87,10 @@
   - [ ] Rich text editor
   - [ ] Schedule announcements
   - [ ] Target audience selection (all, teams, judges)
-- [x] **Display Announcements**
-  - [x] Announcements page in dashboard
-  - [x] View announcement history
 - [ ] **Delivery Channels**
-  - [x] In-app notifications
   - [ ] Email notifications
   - [ ] Push notifications (PWA)
 - [ ] **Announcement History**
-  - [x] View all past announcements
   - [ ] Resend functionality
 
 ### 3.2 Activity Feed
@@ -210,11 +119,6 @@
 **Timeline: 2-3 weeks | Priority: MEDIUM | Status: 🟡 ~50% Complete**
 
 ### 4.1 Admin Dashboard
-- [x] **Overview Metrics**
-  - [x] Registration stats over time
-  - [x] Team formation progress
-  - [x] Submission rate
-  - [x] Judging completion
 - [ ] **Data Visualizations**
   - [ ] Charts using Recharts or Chart.js
   - [ ] Participant demographics
@@ -222,22 +126,8 @@
   - [ ] School/organization breakdown
 
 ### 4.2 Participant Management
-- [x] **Participant List**
-  - [x] Search & filter
-  - [x] Sort by any column
-  - [x] Bulk selection & actions
 - [x] **Participant Details**
-  - [x] View full profile
-  - [x] Team & project info
-  - [x] Registration status
   - [ ] Check-in status
-
-### 4.3 Project Management (Admin)
-- [x] **Project List**
-  - [x] View all projects
-  - [x] Filter by status (draft/submitted)
-  - [x] View project details
-  - [x] View scores
 
 ### 4.4 Export & Reporting
 - [ ] **Data Export**
@@ -383,16 +273,12 @@
 ## 🐛 Known Bugs & Fixes Needed
 
 ### High Priority
-- [x] ~~Fix: Replace all mock data with real Supabase queries~~
-- [x] ~~Fix: Implement proper loading states~~
-- [x] ~~Fix: Add error states for failed data fetches~~
 - [ ] Fix: Form validation error display improvements
 - [ ] Fix: Mobile navigation menu functionality
 - [ ] Fix: Generate proper Supabase types (`supabase gen types typescript`)
 
 ### Medium Priority
 - [ ] Fix: Countdown timer timezone handling
-- [x] ~~Fix: Image fallbacks for missing avatars~~
 - [ ] Fix: Button loading states (some forms)
 - [ ] Fix: Toast notification positioning
 
@@ -406,11 +292,7 @@
 ## 📱 Missing Pages to Build
 
 ### Public Pages
-- [x] `/events` - List of all public events
-- [x] `/events/[slug]` - Public event details page
-- [x] `/events/[slug]/register` - Registration (integrated in detail page)
 - [ ] `/events/[slug]/projects` - Project gallery (separate page)
-- [x] `/leaderboard` - Public leaderboard
 - [ ] `/privacy` - Privacy policy
 - [ ] `/terms` - Terms of service
 - [ ] `/pricing` - SaaS pricing page
@@ -418,11 +300,6 @@
 - [ ] `/about` - About the platform
 
 ### Dashboard Pages
-- [x] `/dashboard/[eventSlug]` - Main dashboard
-- [x] `/dashboard/[eventSlug]/team` - Team management page
-- [x] `/dashboard/[eventSlug]/project` - Project submission page
-- [x] `/dashboard/[eventSlug]/announcements` - Announcements view
-- [x] `/dashboard/[eventSlug]/leaderboard` - Event leaderboard
 - [ ] `/dashboard/[eventSlug]/schedule` - Personal schedule view
 - [ ] `/dashboard/[eventSlug]/resources` - Event resources/downloads
 - [ ] `/settings/profile` - Profile settings
@@ -430,10 +307,7 @@
 - [ ] `/settings/security` - Password & security
 
 ### Admin Pages
-- [x] `/admin/[eventSlug]` - Admin dashboard
-- [x] `/admin/[eventSlug]/participants` - Participant management
 - [ ] `/admin/[eventSlug]/teams` - Team management
-- [x] `/admin/[eventSlug]/projects` - Project management
 - [ ] `/admin/[eventSlug]/judges` - Judge management
 - [ ] `/admin/[eventSlug]/scores` - Scoring overview
 - [ ] `/admin/[eventSlug]/announcements` - Create announcements
@@ -443,7 +317,6 @@
 - [ ] `/admin/organization` - Organization settings
 
 ### Judge Pages
-- [x] `/judge/[eventSlug]` - Judge portal with scoring
 - [ ] `/judge/[eventSlug]/queue` - Project queue (separate view)
 - [ ] `/judge/[eventSlug]/history` - Scoring history
 - [ ] `/judge/[eventSlug]/project/[id]` - Individual project scoring (dedicated page)
