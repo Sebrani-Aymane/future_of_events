@@ -18,7 +18,7 @@ This guide covers deploying the Hackathon Platform to production.
 ### Run Database Schema
 
 1. Go to SQL Editor in your Supabase dashboard
-2. Copy the contents of `supabase/schema.sql`
+2. Copy the contents of `databases/supabase/schema.sql`
 3. Run the SQL to create all tables, functions, and policies
 
 ### Enable Authentication Providers

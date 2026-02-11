@@ -72,24 +72,26 @@
 ## 📁 Project Structure
 
 ```
-├── app/                    # Next.js App Router pages
-│   ├── (auth)/            # Authentication pages
-│   ├── admin/             # Admin dashboard
-│   ├── dashboard/         # Participant dashboard
-│   ├── judge/             # Judge portal
-│   └── leaderboard/       # Public leaderboard
-├── components/
-│   ├── layouts/           # Page layouts
-│   └── ui/                # Reusable UI components
-├── lib/
-│   ├── supabase/          # Supabase clients & queries
-│   ├── utils.ts           # Utility functions
-│   └── validations.ts     # Zod schemas
-├── types/
-│   ├── database.ts        # Database types
-│   └── index.ts           # Application types
-└── supabase/
-    └── schema.sql         # Database schema
+├── frontend/
+│   ├── app/               # Next.js App Router pages
+│   │   ├── (auth)/        # Authentication pages
+│   │   ├── admin/         # Admin dashboard
+│   │   ├── dashboard/     # Participant dashboard
+│   │   ├── judge/         # Judge portal
+│   │   └── leaderboard/   # Public leaderboard
+│   ├── components/
+│   │   ├── layouts/       # Page layouts
+│   │   └── ui/            # Reusable UI components
+│   ├── lib/
+│   │   ├── supabase/      # Supabase clients & queries
+│   │   ├── utils.ts       # Utility functions
+│   │   └── validations.ts # Zod schemas
+│   └── types/
+│       ├── database.ts    # Database types
+│       └── index.ts       # Application types
+└── databases/
+  └── supabase/
+    └── schema.sql     # Database schema
 ```
 
 ## 🚀 Getting Started
@@ -105,7 +107,7 @@
 1. **Clone the repository:**
 ```bash
 git clone https://github.com/yourusername/hackathon-platform.git
-cd hackathon-platform
+cd hackathon-platform/frontend
 ```
 
 2. **Install dependencies:**
@@ -127,7 +129,7 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 
 4. **Set up the database:**
 - Create a new Supabase project
-- Run the schema from `supabase/schema.sql`
+- Run the schema from `databases/supabase/schema.sql`
 - Enable Row Level Security policies
 
 5. **Download fonts:**
@@ -140,6 +142,16 @@ pnpm dev
 ```
 
 Visit [http://localhost:3000](http://localhost:3000)
+
+## 🐳 Docker
+
+Build and run with Docker Compose from the repo root:
+
+```bash
+docker compose up --build
+```
+
+The app will be available at [http://localhost:3000](http://localhost:3000)
 
 ## 🎨 Design System
 
