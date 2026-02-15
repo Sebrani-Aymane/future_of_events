@@ -43,21 +43,25 @@ export default async function AdminDashboardPage({
   }
 
   // Get event by slug
-  const { data: event, error: eventError } = await supabase
-    .from('events')
-    .select('*')
-    .eq('slug', params.eventSlug)
-    .maybeSingle();
+  // Get event by slug
+const { data: eventData, error: eventError } = await supabase
+  .from('events')
+  .select('*')
+  .eq('slug', params.eventSlug)
+  .maybeSingle();
 
-  if (eventError || !event) {
-    redirect('/events');
-  }
+if (eventError || !eventData) {
+  redirect('/events');
+}
+
+// Type assertion - we've confirmed eventData is not null above
+const eventId = eventData as EventRow;
 
   // Check if user is an admin for this event
   const { data: adminRegistration, error: adminRegistrationError } = await supabase
     .from('event_registrations')
     .select('*')
-    .eq('event_id', event.id)
+    .eq('event_id', eventId)
     .eq('user_id', user.id)
     .eq('role', 'admin')
     .maybeSingle();
@@ -81,11 +85,11 @@ export default async function AdminDashboardPage({
     submittedResult,
     judgesResult,
   ] = await Promise.all([
-    supabase.from('event_registrations').select('id', { count: 'exact', head: true }).eq('event_id', event.id).eq('role', 'participant'),
-    supabase.from('teams').select('id', { count: 'exact', head: true }).eq('event_id', event.id),
-    supabase.from('projects').select('id', { count: 'exact', head: true }).eq('event_id', event.id),
-    supabase.from('projects').select('id', { count: 'exact', head: true }).eq('event_id', event.id).eq('status', 'submitted'),
-    supabase.from('event_registrations').select('id', { count: 'exact', head: true }).eq('event_id', event.id).eq('role', 'judge'),
+    supabase.from('event_registrations').select('id', { count: 'exact', head: true }).eq('event_id', eventId).eq('role', 'participant'),
+    supabase.from('teams').select('id', { count: 'exact', head: true }).eq('event_id', eventId),
+    supabase.from('projects').select('id', { count: 'exact', head: true }).eq('event_id', eventId),
+    supabase.from('projects').select('id', { count: 'exact', head: true }).eq('event_id', eventId).eq('status', 'submitted'),
+    supabase.from('event_registrations').select('id', { count: 'exact', head: true }).eq('event_id', eventId).eq('role', 'judge'),
   ]);
 
   if (
@@ -102,7 +106,7 @@ export default async function AdminDashboardPage({
   const { data: recentRegistrationsData, error: recentRegistrationsError } = await supabase
     .from('event_registrations')
     .select('id, user_id, status, role, registered_at')
-    .eq('event_id', event.id)
+    .eq('event_id', eventId)
     .order('registered_at', { ascending: false })
     .limit(5);
 
@@ -131,7 +135,7 @@ export default async function AdminDashboardPage({
   const { data: recentProjectsData, error: recentProjectsError } = await supabase
     .from('projects')
     .select('id, title, status, submitted_at, team_id')
-    .eq('event_id', event.id)
+    .eq('event_id', eventId)
     .order('created_at', { ascending: false })
     .limit(5);
 
@@ -165,7 +169,7 @@ export default async function AdminDashboardPage({
   const { data: scoresData, error: scoresError } = await supabase
     .from('scores')
     .select('project_id, judge_id')
-    .eq('event_id', event.id);
+    .eq('event_id', eventId);
 
   if (scoresError) {
     redirect(`/events/${params.eventSlug}`);
@@ -185,7 +189,7 @@ export default async function AdminDashboardPage({
   const { count: pendingRegistrations, error: pendingError } = await supabase
     .from('event_registrations')
     .select('*', { count: 'exact', head: true })
-    .eq('event_id', event.id)
+    .eq('event_id', eventId)
     .eq('status', 'pending');
 
   if (pendingError) {
