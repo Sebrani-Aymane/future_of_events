@@ -211,7 +211,7 @@ export default async function JudgePortalPage({
         name: profile.full_name || user.email?.split('@')[0] || 'Judge',
         email: user.email || '',
         avatar: profile.avatar_url,
-        specialty: profile.title || 'Judge',
+        specialty: profile.bio || 'Judge',
       }}
       criteria={criteria ?? []}
       projects={projects}

@@ -659,11 +659,11 @@ export interface CreateRegistrationInput {
 // SUPABASE DATABASE TYPE
 // =============================================================================
 
-// Ensures T satisfies Record<string, unknown> for Supabase's GenericTable constraint.
-// TypeScript 5.9+ does not give mapped types (Omit, Partial) implicit index signatures
-// in conditional type contexts, causing SupabaseClient's Schema to resolve to `never`.
-// The intersection with Record<string, unknown> explicitly satisfies the constraint.
-type DbRecord<T> = T & Record<string, unknown>;
+// Identity wrapper – kept for easy refactoring if the Database shape changes.
+// NOTE: TypeScript must be pinned to <5.9 because TS 5.9+ removes implicit
+// index signatures for mapped types, which breaks Supabase's GenericSchema
+// constraint and causes all query results to resolve to `never`.
+type DbRecord<T> = T;
 
 export type Database = {
   public: {
