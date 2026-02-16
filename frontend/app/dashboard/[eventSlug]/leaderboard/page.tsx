@@ -151,7 +151,7 @@ export default async function LeaderboardPage({
       teamName={userTeam?.name}
       userTeamId={userTeam?.id}
       projects={sortedProjects}
-      isJudgingComplete={event.is_judging_complete || false}
+      isJudgingComplete={event.is_results_published || false}
     />
   );
 }

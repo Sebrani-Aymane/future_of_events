@@ -5,6 +5,9 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm ci
+# Pin TypeScript to 5.8.x — TS 5.9+ breaks Supabase type inference
+# (implicit index signatures removed for mapped types)
+RUN npm install --no-save typescript@5.8.3
 
 FROM node:18-alpine AS builder
 WORKDIR /app
@@ -12,7 +15,21 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# NEXT_PUBLIC_ vars must be available at build time so Next.js can inline them
+# into the client bundle. Provide defaults so the build always succeeds;
+# override at runtime (or via docker-compose env / --build-arg).
+ARG NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY=placeholder
+ARG NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
+ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 ENV NEXT_TELEMETRY_DISABLED=1
+
+# Ensure public directory exists (COPY in runner stage requires it)
+RUN mkdir -p public
+
 RUN npm run build
 
 FROM node:18-alpine AS runner

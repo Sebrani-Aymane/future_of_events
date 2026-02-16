@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
@@ -16,7 +16,7 @@ import { AuthLayout } from '@/components/layouts';
 import { resendVerificationEmail } from '@/lib/auth/actions';
 import { toast } from 'sonner';
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const email = searchParams.get('email') || '';
   const [isResending, setIsResending] = useState(false);
@@ -148,5 +148,22 @@ export default function VerifyEmailPage() {
         </div>
       </motion.div>
     </AuthLayout>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={
+      <AuthLayout
+        title="Verify your email"
+        description="We've sent a verification link to your inbox"
+      >
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      </AuthLayout>
+    }>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

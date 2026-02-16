@@ -8,6 +8,7 @@ type EventRow = Database['public']['Tables']['events']['Row'];
 type EventRegistrationRow = Database['public']['Tables']['event_registrations']['Row'];
 type ProjectRow = Database['public']['Tables']['projects']['Row'];
 type ScoreRow = Database['public']['Tables']['scores']['Row'];
+type TeamRow = Database['public']['Tables']['teams']['Row'];
 
 type RecentRegistration = EventRegistrationRow & {
   user: Pick<ProfileRow, 'id' | 'full_name' | 'avatar_url' | 'email'> | null;
@@ -43,19 +44,17 @@ export default async function AdminDashboardPage({
   }
 
   // Get event by slug
-  // Get event by slug
-const { data: eventData, error: eventError } = await supabase
-  .from('events')
-  .select('*')
-  .eq('slug', params.eventSlug)
-  .maybeSingle();
+  const { data: event, error: eventError } = await supabase
+    .from('events')
+    .select('*')
+    .eq('slug', params.eventSlug)
+    .maybeSingle();
 
-if (eventError || !eventData) {
-  redirect('/events');
-}
+  if (eventError || !event) {
+    redirect('/events');
+  }
 
-// Type assertion - we've confirmed eventData is not null above
-const eventId = eventData as EventRow;
+  const eventId = event.id;
 
   // Check if user is an admin for this event
   const { data: adminRegistration, error: adminRegistrationError } = await supabase
@@ -71,7 +70,7 @@ const eventId = eventData as EventRow;
   }
 
   // Also check if user is a site admin
-  const isSiteAdmin = profile.role === 'admin';
+  const isSiteAdmin = profile.role === 'admin' || profile.role === 'superadmin';
 
   if (!adminRegistration && !isSiteAdmin) {
     redirect(`/events/${params.eventSlug}`);
@@ -162,7 +161,7 @@ const eventId = eventData as EventRow;
     title: project.title,
     status: project.status,
     submitted_at: project.submitted_at,
-    team: project.team_id ? teamsById.get(project.team_id) ?? null : null,
+    team: project.team_id ? { name: teamsById.get(project.team_id)?.name ?? 'Team' } : null,
   }));
 
   // Get judging progress
