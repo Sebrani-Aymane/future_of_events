@@ -38,7 +38,11 @@ const nextConfig = {
     ],
   },
   experimental: {
-    // typedRoutes: true, // Disabled temporarily - enable when all routes are created
+   serverActions: {
+      allowedOrigins: process.env.ALLOWED_ORIGINS 
+        ? process.env.ALLOWED_ORIGINS.split(',') 
+        : ['localhost:3000'],
+    },s: true, // Disabled temporarily - enable when all routes are created
   },
   headers: async () => [
     {

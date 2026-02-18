@@ -4,9 +4,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-http://localhost:54321}
-        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-placeholder}
-        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+          NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:-https://cdezzoutlmymojjbkyzm.supabase.co}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZXp6b3V0bG15bW9qamJreXptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA2ODY1MTUsImV4cCI6MjA4NjI2MjUxNX0.kGEeq6oqGurNcgxEzBOQwihKjHvneTVd0QY4c6tbcTw}
+          NEXT_PUBLIC_APP_URL: https://redesigned-space-couscous-x55r6gjw4pw9c6767-3000.app.github.dev
     ports:
       - "3000:3000"
     env_file:

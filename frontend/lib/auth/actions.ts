@@ -44,12 +44,14 @@ export type SignUpData = {
 // =============================================================================
 
 async function getOrigin(): Promise<string> {
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL;
+  }
   const headersList = await headers();
   const host = headersList.get("host") || "localhost:3000";
   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
   return `${protocol}://${host}`;
 }
-
 // =============================================================================
 // SIGN UP
 // =============================================================================
@@ -189,10 +191,12 @@ export async function signInWithOAuth(
   const supabase = await createSupabaseServerClient();
   const origin = await getOrigin();
 
+  const callbackUrl = `${origin}/auth/callback?next=${encodeURIComponent(redirectTo || "/dashboard")}`;
+
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: `${origin}/auth/callback?next=${redirectTo || "/dashboard"}`,
+  provider,
+  options: {
+    redirectTo: `${origin}/auth/callback?next=${redirectTo || "/dashboard"}`,
       queryParams: provider === "google" ? {
         access_type: "offline",
         prompt: "consent",
@@ -204,9 +208,12 @@ export async function signInWithOAuth(
     return { error: error.message };
   }
 
+  if (!data.url) {
+    return { error: "No OAuth URL returned" };
+  }
+
   return { url: data.url };
 }
-
 // =============================================================================
 // PASSWORD RESET
 // =============================================================================
